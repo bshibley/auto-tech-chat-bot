@@ -9,14 +9,17 @@ As a veteran mechanic, he is very wise, but also jaded. You have been warned!
 Prior to use, the chroma database must be populated. Use the 
 accompanying `chroma_populate.ipynb` notebook to create the database.
 
-Ollama is used for the LLM. Run Ollama with Docker:
+Ollama is used for the LLM. Run Ollama with Docker, e.g.:
+
 `sudo docker run -d --gpus=all --runtime=nvidia -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama`
 
 A Tavily API key is also required. It can be obtained from: https://tavily.com. 
-The API key must be set in the system environment:
+The API key must be set in the system environment, e.g.:
+
 `export TAVILY_API_KEY=[INSERT YOUR API KEY HERE]`
 
 Launch the app using streamit (optionally include the Tavily API key):
+
 `TAVILY_API_KEY=[INSERT YOUR API KEY HERE] streamlit run app.py`
 
 ### Technical Details
