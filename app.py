@@ -52,15 +52,16 @@ def handle_submit_simple(llm_chain, message, db, search_client):
 
     # Handle the response
     with st.spinner('Thinkin\' about it...'):
-        search_response = search_client.search(message, search_depth="advanced")["results"]
+        context = ""
+        search_response = search_client.qna_search(message, search_depth="advanced", exclude_domains=["https://www.youtube.com"])
+        context += search_response
         print("Search response:")
         pprint.pprint(search_response)
         db_response = db.similarity_search(message)
         print("Vector DB response:")
         pprint.pprint(db_response)
-        context = db_response[0].page_content
-        for result in search_response:
-            context += " \n "+result["content"]
+        for result in db_response:
+            context += " \n "+result.page_content
         response = llm_chain.invoke({"context": context,"question": message})
         pprint.pprint(response)
         write_message('assistant', response["text"])
